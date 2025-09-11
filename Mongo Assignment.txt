@@ -1,0 +1,371 @@
+Mongo Assignment
+
+1. db.Users2.find({age: {$gt: 25}})
+[
+  {
+    _id: ObjectId('68a701d28c2f84b9732710c0'),
+    name: 'Bob Johnson',
+    age: 28,
+    email: 'bob.johnson@example.com',
+    status: 'inactive'
+  },
+  {
+    _id: ObjectId('68a701d28c2f84b9732710c1'),
+    name: 'Charlie Brown',
+    age: 30,
+    email: 'charlie.brown@example.com',
+    status: 'pending'
+  }
+]
+
+
+2. db.Users2.find({status: {$exists: true}});
+[
+  {
+    _id: ObjectId('68a701d28c2f84b9732710bf'),
+    name: 'Alice Smith',
+    age: 22,
+    email: 'alice.smith@example.com',
+    status: 'active'
+  },
+  {
+    _id: ObjectId('68a701d28c2f84b9732710c0'),
+    name: 'Bob Johnson',
+    age: 28,
+    email: 'bob.johnson@example.com',
+    status: 'inactive'
+  },
+  {
+    _id: ObjectId('68a701d28c2f84b9732710c1'),
+    name: 'Charlie Brown',
+    age: 30,
+    email: 'charlie.brown@example.com',
+    status: 'pending'
+  }
+]
+
+
+3. db.Users2.updateOne({name: 'Bob Johnson'}, {$set: {status: 'inActive'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+4. db.Users2.updateOne({name: 'Alice Smith'}, {$inc: {age: 1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+db.products.find()
+[
+  {
+    _id: ObjectId('68a8109fb579ec12c52710bc'),
+    name: 'laptop',
+    price: 1200,
+    tags: [ 'electronics', 'computer' ]
+  },
+  {
+    _id: ObjectId('68a811c8b579ec12c52710bd'),
+    name: 'phone',
+    price: 800,
+    tags: [ 'electronics', 'mobile' ]
+  },
+  {
+    _id: ObjectId('68a811c8b579ec12c52710be'),
+    name: 'shoes',
+    price: 150,
+    tags: [ 'fashon', 'clothing' ]
+  },
+  {
+    _id: ObjectId('68a811c8b579ec12c52710bf'),
+    name: 'watch',
+    price: 300,
+    tags: [ 'fashon', 'accessory' ]
+  }
+]
+
+
+5. db.products.find({price: {$lte: 500}})
+[
+  {
+    _id: ObjectId('68a811c8b579ec12c52710be'),
+    name: 'shoes',
+    price: 150,
+    tags: [ 'fashon', 'clothing' ]
+  },
+  {
+    _id: ObjectId('68a811c8b579ec12c52710bf'),
+    name: 'watch',
+    price: 300,
+    tags: [ 'fashon', 'accessory' ]
+  }
+]
+
+
+6. db.products.find({tags: {$in: "electronics"}})
+MongoServerError[BadValue]: $in needs an array
+restaurant> db.products.find({tags: {$in: ["electronics"]}})
+[
+  {
+    _id: ObjectId('68a8109fb579ec12c52710bc'),
+    name: 'laptop',
+    price: 1200,
+    tags: [ 'electronics', 'computer' ]
+  },
+  {
+    _id: ObjectId('68a811c8b579ec12c52710bd'),
+    name: 'phone',
+    price: 800,
+    tags: [ 'electronics', 'mobile' ]
+  }
+]
+
+
+7. db.products.updateMany({$set: {stock: 100}})
+MongoInvalidArgumentError: Update document requires atomic operators
+restaurant> db.products.updateMany({},{$set: {stock: 100}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+
+
+8. db.products.updateMany({price: {$set: cost}})
+ReferenceError: cost is not defined
+restaurant> db.products.updateMany({}, {$rename: {"price": "cost"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+restaurant> db.products.find()
+[
+  {
+    _id: ObjectId('68a8109fb579ec12c52710bc'),
+    name: 'laptop',
+    tags: [ 'electronics', 'computer' ],
+    stock: 100,
+    cost: 1200
+  },
+  {
+    _id: ObjectId('68a811c8b579ec12c52710bd'),
+    name: 'phone',
+    tags: [ 'electronics', 'mobile' ],
+    stock: 100,
+    cost: 800
+  },
+  {
+    _id: ObjectId('68a811c8b579ec12c52710be'),
+    name: 'shoes',
+    tags: [ 'fashon', 'clothing' ],
+    stock: 100,
+    cost: 150
+  },
+  {
+    _id: ObjectId('68a811c8b579ec12c52710bf'),
+    name: 'watch',
+    tags: [ 'fashon', 'accessory' ],
+    stock: 100,
+    cost: 300
+  }
+]
+
+
+9. db.createCollection("orders")
+{ ok: 1 }
+restaurant> db.orders.insertMany([{"orderid": 1, "total": 500, "items": 3, "date": "2025-08-01"}, {"orderid": 2, "total": 1200, "items": 6, "date": "2025-08-10"}, {"orderid": 3, "total": 750, "items": 4, "date": "2025-08-15"},{"orderid": 4, "total": 1000, "items": 3, "date": "2025-08-01"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('68a8174eb579ec12c52710c0'),
+    '1': ObjectId('68a8174eb579ec12c52710c1'),
+    '2': ObjectId('68a8174eb579ec12c52710c2'),
+    '3': ObjectId('68a8174eb579ec12c52710c3')
+  }
+}
+
+
+10.db.orders.find({total: {$ne: 750}})
+[
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c0'),
+    orderid: 1,
+    total: 500,
+    items: 3,
+    date: '2025-08-01'
+  },
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c1'),
+    orderid: 2,
+    total: 1200,
+    items: 6,
+    date: '2025-08-10'
+  },
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c3'),
+    orderid: 4,
+    total: 1000,
+    items: 3,
+    date: '2025-08-01'
+  }
+]
+
+
+11. db.orders.updateMany({}, {$unset: {items: ""}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+restaurant> db.orders.find()
+[
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c0'),
+    orderid: 1,
+    total: 500,
+    date: '2025-08-01'
+  },
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c1'),
+    orderid: 2,
+    total: 1200,
+    date: '2025-08-10'
+  },
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c2'),
+    orderid: 3,
+    total: 750,
+    date: '2025-08-15'
+  },
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c3'),
+    orderid: 4,
+    total: 1000,
+    date: '2025-08-01'
+  }
+]
+
+12. db.orders.updateMany({total: {$mul: 1.1}})
+MongoInvalidArgumentError: Update document requires atomic operators
+restaurant>  db.orders.updateMany({}, {$mul: {total: 1.1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+restaurant> db.orders.find()
+[
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c0'),
+    orderid: 1,
+    total: 550,
+    date: '2025-08-01'
+  },
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c1'),
+    orderid: 2,
+    total: 1320,
+    date: '2025-08-10'
+  },
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c2'),
+    orderid: 3,
+    total: 825.0000000000001,
+    date: '2025-08-15'
+  },
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c3'),
+    orderid: 4,
+    total: 1100,
+    date: '2025-08-01'
+  }
+]
+
+13. db.orders.find({date: {$gt: "2025-08-05"}})
+[
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c1'),
+    orderid: 2,
+    total: 1320,
+    date: '2025-08-10'
+  },
+  {
+    _id: ObjectId('68a8174eb579ec12c52710c2'),
+    orderid: 3,
+    total: 825.0000000000001,
+    date: '2025-08-15'
+  }
+]
+
+14.  db.students.find({grades: {$in: [100]}})
+[
+  {
+    _id: ObjectId('68a81b08b579ec12c52710c6'),
+    name: 'Grace',
+    grades: [ 95, 100, 98 ]
+  }
+]
+
+15. db.students.updateOne({name: "Frank"}, {$pop: {grades: 1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+16.   db.students.find({grades: {$elemMatch: {$gt: 90}}})
+[
+  {
+    _id: ObjectId('68a81b08b579ec12c52710c6'),
+    name: 'Grace',
+    grades: [ 95, 100, 98 ]
+  }
+]
+
+17.  db.students.updateOne({name: "Eva"}, {$addToSet: {grades: 88}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+18. db.employees.aggregate([{$group: {_id: "department", totalSalary: {$sum: "$salary"}}}])
+
+19. db.employees.aggregate([{$group: {_id: "avg_Salary", totalSalary: {$avg: "$salary"}}}])
+
+20. db.employees.aggregate([{$project: {_id: 0, name: 1, salary: 1}}])
+[
+  { name: 'Henry', salary: 50000 },
+  { name: 'Irene', salary: 60000 },
+  { name: 'Jack', salary: 55000 },
+  { name: 'Karen', salary: 70000 }
+]
+
+db.employees.aggregate([{$project: {_id: 0, name: 1, salary: 1}}, {$sort: {salary: -1}}])
+[
+  { name: 'Karen', salary: 70000 },
+  { name: 'Irene', salary: 60000 },
+  { name: 'Jack', salary: 55000 },
+  { name: 'Henry', salary: 50000 }
+]

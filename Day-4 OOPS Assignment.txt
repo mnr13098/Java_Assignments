@@ -1,0 +1,247 @@
+Day-4 Assignment
+
+1. public class Main
+{
+    
+    
+    static abstract public class Shape{
+        
+        abstract double calculateArea();
+    }
+    
+    static class Circle extends Shape{
+        
+        double radius;
+        
+        public Circle(double radius) {
+            this.radius = radius;
+        }
+        
+        double calculateArea(){
+            return 3.14*radius*radius;
+        }
+        
+    }
+    
+    static class Rectangle extends Shape{
+        double length;
+        double width;
+        
+        public Rectangle(double length, double width){
+            this.length = length;
+            this.width = width;
+        }
+        
+        double calculateArea(){
+            return length*width;
+        }
+        
+    }
+    
+    static class Triangle extends Shape{
+        double base;
+        double height;
+        
+        public Triangle(double base, double height){
+            this.base = base;
+            this.height = height;
+        }
+        
+        double calculateArea(){
+            return 0.5*base*height;
+        }
+    }
+    
+	public static void main(String[] args) {
+		Circle c = new Circle(5.1);
+		Rectangle r= new Rectangle(5,2);
+		Triangle t = new Triangle(5,2);
+		System.out.println(c.calculateArea());
+		System.out.println(r.calculateArea());
+		System.out.println(t.calculateArea());
+	}
+}
+
+2.public class Main
+{
+    static public abstract class Animal{
+        void makeSound(){
+            System.out.println("Some Sound");
+        }
+    }
+    
+    static class Dog extends Animal{
+        void makeSound(){
+            System.out.println("Bark");
+        }
+    }
+    static class Cat extends Animal{
+        void makeSound(){
+            System.out.println("Meow");
+        }
+    }
+    
+	public static void main(String[] args) {
+		Dog d = new Dog();
+		Cat c = new Cat();
+		d.makeSound();
+		c.makeSound();
+	}
+}
+
+3.public class Main
+{
+    
+    static abstract public class Sport{
+        void play(){
+            System.out.println("Playing a Sport");
+        }
+    }
+    
+    static class Football extends Sport{
+        void play(){
+            System.out.println("Playing a football");
+        }
+    }
+    static class Basketball extends Sport{
+        void play(){
+            System.out.println("Playing a basketball");
+        }
+    }
+    static class Tennis extends Sport{
+        void play(){
+            System.out.println("Playing a tennis");
+        }
+    }
+	public static void main(String[] args) {
+		Football f = new Football();
+		f.play();
+		Basketball b = new Basketball();
+		b.play();
+		Tennis t = new Tennis();
+		t.play();
+	}
+}
+
+4. public class Main
+{
+    static abstract public class Vehicle{
+        abstract void startEngine();
+        abstract void stopEngine();
+    }
+    static class Car extends Vehicle{
+        void startEngine(){
+            System.out.println("Car engine started");
+        }
+        void stopEngine(){
+            System.out.println("Car engine stopped");
+        }
+    }
+    static class Motorcycle extends Vehicle{
+         void startEngine(){
+            System.out.println("Cycle engine started");
+        }
+        void stopEngine(){
+            System.out.println("Cycle engine stopped");
+        }
+    }
+	public static void main(String[] args) {
+        Car c = new Car();
+        c.startEngine();
+        c.stopEngine();
+        Motorcycle m = new Motorcycle();
+        m.startEngine();
+        m.stopEngine();
+	}
+}
+
+5.public class Main
+{
+    public class BankAccount {
+
+    private String accountNumber;
+    private double balance;
+
+    public BankAccount(String accountNumber, double initialBalance) {
+        this.accountNumber = accountNumber;
+        if (initialBalance >= 0) {
+            this.balance = initialBalance;
+        } else {
+            System.out.println("Initial balance cannot be negative. Setting to 0.");
+            this.balance = 0;
+        }
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: " + amount);
+        } else {
+            System.out.println("Deposit amount must be positive.");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount <= 0) {
+            System.out.println("Withdrawal amount must be positive.");
+        } else if (amount > balance) {
+            System.out.println("Insufficient balance. Withdrawal failed.");
+        } else {
+            balance -= amount;
+            System.out.println("Withdrawn: " + amount);
+        }
+    }
+
+    public void displayAccountDetails() {
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Balance: ₹" + balance);
+    }
+
+    public static void main(String[] args) {
+        BankAccount account = new BankAccount("1234567890", 5000);
+
+        account.displayAccountDetails();
+        account.deposit(1500);
+        account.withdraw(2000);
+        account.withdraw(10000);
+        account.deposit(-100); 
+        account.displayAccountDetails();
+    }
+}
+
+}
+
+6. public class Main {
+
+    static class Person {
+        private String name;
+        private int age;
+        static int count = 0;
+
+        public Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+            count++;
+        }
+
+        public void displayDetails() {
+            System.out.println("Name: " + name + ", Age: " + age);
+        }
+
+        public static void displayCount() {
+            System.out.println("Number of Person objects created: " + count);
+        }
+    }
+
+    public static void main(String[] args) {
+        Person p1 = new Person("MNR", 25);
+        Person p2 = new Person("SARATH", 30);
+        Person p3 = new Person("KOWSHIK", 22);
+
+        p1.displayDetails();
+        p2.displayDetails();
+        p3.displayDetails();
+
+        Person.displayCount();
+    }
+}

@@ -1,0 +1,206 @@
+Stream API_Assignment_Sols
+
+//Sort string alphabetically
+1. import java.util.*;
+
+public class SortStrings {
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("banana", "apple", "mango");
+        List<String> sorted = list.stream().sorted().toList();
+        System.out.println(sorted);
+    }
+}
+
+//Count of strings longer than 4
+2.import java.util.*;
+
+public class CountLongStrings {
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("cat", "tiger", "lion", "crocodile");
+        long count = list.stream().filter(s -> s.length() > 4).count();
+        System.out.println(count);
+    }
+}
+
+
+//Group employees by Dept
+3.import java.util.*;
+import java.util.stream.*;
+
+class Employee {
+    String name, department;
+    Employee(String name, String department) {
+        this.name = name; this.department = department;
+    }
+}
+
+public class GroupByDepartment {
+    public static void main(String[] args) {
+        List<Employee> emps = Arrays.asList(
+            new Employee("John", "IT"),
+            new Employee("Alice", "HR"),
+            new Employee("Bob", "IT")
+        );
+
+        Map<String, List<String>> grouped = emps.stream()
+            .collect(Collectors.groupingBy(e -> e.department,
+                    Collectors.mapping(e -> e.name, Collectors.toList())));
+        System.out.println(grouped);
+    }
+}
+
+//Find avg Saalry
+4.import java.util.*;
+import java.util.stream.*;
+
+class Employee {
+    String name; double salary;
+    Employee(String name, double salary) { this.name = name; this.salary = salary; }
+}
+
+public class AverageSalary {
+    public static void main(String[] args) {
+        List<Employee> emps = Arrays.asList(
+            new Employee("John", 50000),
+            new Employee("Alice", 60000)
+        );
+
+        double avg = emps.stream().collect(Collectors.averagingDouble(e -> e.salary));
+        System.out.println(avg);
+    }
+}
+
+
+//String concat
+5. import java.util.*;
+import java.util.stream.*;
+
+public class ConcatStrings {
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("Java", "Python", "C++");
+        String result = list.stream().collect(Collectors.joining(","));
+        System.out.println(result);
+    }
+}
+
+//Highest paid employee
+6.import java.util.*;
+
+class Employee {
+    String name; double salary;
+    Employee(String name, double salary) { this.name = name; this.salary = salary; }
+}
+
+public class HighestPaidEmployee {
+    public static void main(String[] args) {
+        List<Employee> emps = Arrays.asList(
+            new Employee("John", 70000),
+            new Employee("Alice", 95000)
+        );
+
+        Employee e = emps.stream().max(Comparator.comparingDouble(emp -> emp.salary)).get();
+        System.out.println(e.name);
+    }
+}
+
+//Map names to their length
+7.import java.util.*;
+import java.util.stream.*;
+
+public class NameLengthMap {
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("Tom", "Elizabeth", "Sam");
+        Map<String, Integer> map = list.stream()
+            .collect(Collectors.toMap(s -> s, String::length));
+        System.out.println(map);
+    }
+}
+
+//to upper case
+8.import java.util.*;
+
+public class UpperCaseStrings {
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("java", "python");
+        List<String> upper = list.stream().map(String::toUpperCase).toList();
+        System.out.println(upper);
+    }
+}
+
+//first 3 nums
+9.import java.util.*;
+
+public class FirstThreeNumbers {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(40, 15, 25, 20, 35, 7);
+        List<Integer> result = list.stream().limit(3).toList();
+        System.out.println(result);
+    }
+}
+
+//Multiply using reduce
+10. import java.util.*;
+
+public class MultiplyNumbers {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(40, 15, 25, 20, 35, 7);
+        int product = list.stream().reduce(1, (a, b) -> a * b);
+        System.out.println(product);
+    }
+}
+
+//Count dist words
+11.import java.util.*;
+
+public class DistinctWords {
+    public static void main(String[] args) {
+        String text = "Java is great. JAVA is powerful.";
+        long count = Arrays.stream(text.replaceAll("[^a-zA-Z ]", "")
+                .toLowerCase().split("\\s+"))
+            .distinct()
+            .count();
+        System.out.println(count);
+    }
+}
+
+//Names starting with A
+12.import java.util.*;
+
+public class NamesStartingWithA {
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("Alice", "Bob", "Andrew", "Tom");
+        List<String> result = list.stream().filter(s -> s.startsWith("A")).toList();
+        System.out.println(result);
+    }
+}
+
+//Longest string
+13.import java.util.*;
+
+public class LongestString {
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("cat", "elephant", "dog");
+        String longest = list.stream().max(Comparator.comparingInt(String::length)).get();
+        System.out.println(longest);
+    }
+}
+
+
+//Countoccurance of each word
+14.import java.util.*;
+import java.util.stream.*;
+
+public class WordOccurrences {
+    public static void main(String[] args) {
+        String text = "apple banana apple orange banana apple";
+        Map<String, Long> freq = Arrays.stream(text.split("\\s+"))
+            .collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+        System.out.println(freq);
+    }
+}
+
+
+
+
+
+

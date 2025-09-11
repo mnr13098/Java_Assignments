@@ -1,0 +1,123 @@
+﻿Day-2 and Day-3 Assaignments on Arrays and Strings
+
+
+import java.util.*;
+
+
+public class  Main{
+
+
+    // 1. Reverse a string
+    public static void reverseString(String str) {
+        String ans = "";
+        for (int i = str.length() - 1; i >= 0; i--) {
+            ans += str.charAt(i);
+        }
+        System.out.println("Reversed String: " + ans);
+    }
+
+
+    // 2. Count vowels and consonants
+    public static void countVowelsConsonants(String str) {
+        int vow = 0, con = 0;
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+                vow++;
+            } else {
+                con++;
+            }
+        }
+        System.out.println("No of Vowels: " + vow);
+        System.out.println("No of Consonants: " + con);
+    }
+
+
+    // 3. Check if two strings are anagrams
+    public static void checkAnagram(String str1, String str2) {
+        char[] chars1 = str1.toCharArray();
+        char[] chars2 = str2.toCharArray();
+        Arrays.sort(chars1);
+        Arrays.sort(chars2);
+        if (Arrays.equals(chars1, chars2)) {
+            System.out.println("Strings are anagrams");
+        } else {
+            System.out.println("Strings are not anagrams");
+        }
+    }
+
+
+    // 4. Find largest element in array
+    public static void findLargestElement(int[] arr) {
+        Arrays.sort(arr);
+        System.out.println("Largest element: " + arr[arr.length - 1]);
+    }
+
+
+    // 5. Print even numbers from array
+    public static void printEvenNumbers(int[] arr) {
+        System.out.print("Even numbers: ");
+        for (int num : arr) {
+            if (num % 2 == 0) {
+                System.out.print(num + " ");
+            }
+        }
+        System.out.println();
+    }
+
+
+    // 6. Sum of elements in array
+    public static void sumOfElements(int[] arr) {
+        int sum = 0;
+        for (int num : arr) {
+            sum += num;
+        }
+        System.out.println("Sum of elements: " + sum);
+    }
+
+
+    // 7. Sort array
+    public static void sortArray(int[] arr) {
+        Arrays.sort(arr);
+        System.out.println("Sorted array: " + Arrays.toString(arr));
+    }
+
+
+    // 8. Print distinct elements
+    public static void distinctElements(int[] arr) {
+        System.out.print("Distinct elements: ");
+        for (int i = 0; i < arr.length; i++) {
+            boolean isDistinct = true;
+            for (int j = 0; j < i; j++) {
+                if (arr[i] == arr[j]) {
+                    isDistinct = false;
+                    break;
+                }
+            }
+            if (isDistinct) {
+                System.out.print(arr[i] + " ");
+            }
+        }
+        System.out.println();
+    }
+
+
+    public static void main(String[] args) {
+        String str1 = "MNR";
+        String str2 = "abcdefghijoupwer";
+        String ana1 = "anagram";
+        String ana2 = "nagaram";
+        int[] arr = {5, 10, 3, 8, 6, 6, 3, 15, 18, 5, 25};
+        int[] arrDistinct = {4, 5, 4, 2, 5, 3, 2, 1};
+
+
+        reverseString(str1);
+        countVowelsConsonants(str2);
+        checkAnagram(ana1, ana2);
+        findLargestElement(arr.clone());
+        printEvenNumbers(arr);
+        sumOfElements(arr);
+        sortArray(arr.clone());
+        distinctElements(arrDistinct);
+    }
+}

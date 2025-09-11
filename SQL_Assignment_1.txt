@@ -1,0 +1,155 @@
+SQL_Assignment_1_Solutions
+-- create
+CREATE TABLE STUDENTS (
+  StudentId INTEGER PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  AGE INTEGER NOT NULL,
+  GRADE VARCHAR(3) NOT NULL
+);
+
+CREATE TABLE COURSES(
+  CourseId INTEGER PRIMARY KEY,
+  COURSENAME VARCHAR(20) NOT NULL,
+  INSTRUCTOR VARCHAR(20) NOT NULL
+  DepartmentId INTEGER, FOREIGN KEY(DepartmentId) REFERENCES Departments(DepartmentId)
+);
+
+CREATE TABLE ENROLLMENTS(
+  ENROLLMENTID INTEGER PRIMARY KEY,
+  StudentId INTEGER, foreign KEY (StudentId) REFERENCES STUDENTS(StudentId),
+  COURSEID INTEGER, FOREIGN KEY(CourseId) REFERENCES COURSES(CourseId)
+  
+);
+
+CREATE TABLE Departments (
+    Departmentid INT PRIMARY KEY,
+    Department_name VARCHAR(100) NOT NULL
+);
+
+
+-- insert
+INSERT INTO STUDENTS VALUES (0001, 'MNR', 21, 'A');
+INSERT INTO STUDENTS VALUES (0002, 'Dave', 14, 'B');
+INSERT INTO STUDENTS VALUES (0003, 'MBR', 25, 'B');
+INSERT INTO STUDENTS VALUES (0004, 'MBREDDY', 26, 'C');
+INSERT INTO STUDENTS VALUES (0005, 'RAVI', 25, 'A');
+
+INSERT INTO COURSES VALUES (11, 'MATHEMATICS', 'RK');
+INSERT INTO COURSES VALUES (22, 'PHYSICS', 'JAGADEESH');
+INSERT INTO COURSES VALUES (33, 'CHEMISTRY', 'KK');
+INSERT INTO COURSES VALUES (44, 'English', 'Vikram');
+INSERT INTO COURSES VALUES (55, 'Social', 'Surya');
+
+INSERT INTO ENROLLMENTS VALUES(101, 0001, 11);
+INSERT INTO ENROLLMENTS VALUES(102, 0002, 22);
+INSERT INTO ENROLLMENTS VALUES(103, 0003, 11);
+INSERT INTO ENROLLMENTS VALUES(104, 0004, 44);
+INSERT INTO ENROLLMENTS VALUES(105, 0005, 55);
+
+
+-- fetch 
+SELECT * FROM STUDENTS
+where age > 15;
+
+update STUDENTS
+set grade = 'A' where StudentId = 3;
+
+Select * from STUDENTS
+where StudentId = 3;
+
+SELECT studentid FROM ENROLLMENTS e join courses c on e.courseid = c.courseid
+where c.COURSENAME = 'Mathematics';
+
+select c.COURSENAME, count(*) as Students_Count
+from courses c join enrollments e on c.CourseId = e.CourseId
+group by COURSENAME;
+
+SELECT s.name, c.COURSENAME
+FROM enrollments e
+JOIN courses c ON e.courseid = c.courseid
+JOIN students s ON e.studentid = s.studentid;
+
+SELECT s.name, c.COURSENAME
+FROM students s
+LEFT JOIN enrollments e ON s.studentid = e.studentid
+LEFT JOIN courses c ON e.courseid = c.courseid
+WHERE c.COURSENAME IS NULL;
+
+ALTER TABLE students
+ADD COLUMN email VARCHAR(100) NOT NULL;
+
+select avg(age) as Avg_age
+from students;
+
+select name
+from students
+order by name desc;
+
+CREATE VIEW StudentCoursesView AS
+SELECT s.name, c.coursename, c.INSTRUCTOR
+FROM students s
+JOIN enrollments e ON s.studentid = e.studentid
+JOIN courses c ON e.courseid = c.courseid;
+
+SELECT * FROM StudentCoursesView;
+
+SELECT s.name, c.COURSENAME
+FROM students s
+LEFT JOIN enrollments e ON s.studentid = e.studentid
+LEFT JOIN courses c ON e.courseid = c.courseid
+WHERE c.COURSENAME IS NULL;
+
+
+CREATE INDEX students_name_idx
+ON students (name);
+
+select name, age
+from students
+order by age 
+limit 3;
+
+
+DELIMITER //
+
+CREATE PROCEDURE insert_student(
+    IN p_studentid INT,
+    IN p_name VARCHAR(100),
+    IN p_age INT,
+    IN p_grade VARCHAR(10),
+    IN P_email VARCHAR(100)
+)
+BEGIN
+    INSERT INTO students (studentid, name, age, grade, email)
+    VALUES (p_studentid, p_name, p_age, p_grade, p_email);
+END //
+
+DELIMITER ;
+
+ALTER TABLE students
+ADD COLUMN last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+DELIMITER //
+
+CREATE TRIGGER update_last_updated
+BEFORE UPDATE ON students
+FOR EACH ROW
+BEGIN
+    SET NEW.last_updated = CURRENT_TIMESTAMP;
+END //
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

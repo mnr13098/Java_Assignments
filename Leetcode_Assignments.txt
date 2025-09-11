@@ -1,0 +1,114 @@
+1. Reverse an integer
+
+class Solution {
+    public int reverse(int x) {
+        List<Integer> dig = new ArrayList<>();
+        int nx = Math.abs(x);
+        while (nx > 0) {
+            dig.add(nx % 10);
+            nx /= 10;
+        }
+        int num = 0;
+        for (int i = 0; i < dig.size(); i++) {
+            int d = dig.get(i);
+            if (num > (Integer.MAX_VALUE - d) / 10) {
+                return 0;
+            }
+            num = num * 10 + d;
+        }
+        if (x < 0) {
+            num = -num;
+        }
+        return num;
+    }
+}
+
+2. Length of longest substring w/o repeated chars
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int ans = 0;
+        Set<Character> charSet = new HashSet<>();
+        for(int i=0; i<s.length(); i++){
+            for(int j=i; j<s.length(); j++){
+                if(charSet.contains(s.charAt(j))){
+                    charSet.clear();
+                    break;
+                }
+                else{
+                    charSet.add(s.charAt(j));
+                    ans = Math.max(ans, j-i+1);
+                }
+            }
+        }
+        return ans;
+    }
+}
+
+3. Longest Palindromic Substring
+class Solution {
+    public String expAroundCentre(String s, int left, int right){
+        while(left >= 0 && right < s.length() && s.charAt(left)==s.charAt(right)){
+            left--;
+            right++;
+        }
+        return s.substring(left + 1, right);
+    }
+
+    public String longestPalindrome(String s) {
+        int n = s.length();
+        String ans = "";
+        for(int i=0; i<n; i++){
+            String tempp = expAroundCentre(s, i, i);
+            if(tempp.length()>ans.length()) ans = tempp;
+
+            tempp = expAroundCentre(s, i, i+1);
+            if(tempp.length()>ans.length()) ans = tempp;
+        }
+        return ans;
+    }
+}
+
+4. Two SUm
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                return new int[]{ map.get(complement), i };
+            }
+            map.put(nums[i], i);
+        }
+        return new int[0];
+    }
+}
+5.class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        int[] arr = new int[n1+n2];
+        int i = 0;
+        int j = 0;
+        int count = 0;
+        while(i<n1 && j<n2){
+            if(nums1[i]<nums2[j]){
+                arr[count++] = nums1[i++];
+            }
+            else {
+                arr[count++] = nums2[j++];
+            }
+        }
+        while (i < n1) arr[count++]=nums1[i++];
+        while (j < n2) arr[count++]=nums2[j++];
+
+        int n = n1 + n2;
+
+        if (n % 2 == 1)
+        {
+            return (double)arr[n / 2];
+        }
+
+        double median = ((double)arr[n / 2] + (double)arr[(n / 2) - 1]) / 2.0;
+        return median;
+    }
+}

@@ -1,0 +1,141 @@
+Day-1 Assignment 
+public class Main
+{
+	public static void main(String[] args) {
+       swap(10,20);
+       System.out.println(multiply(2.57f, 3.2f));
+       evorodd(4);
+       area(2);
+       posOrNeg(-5);
+       factorial(5);
+       greater(5,6,7);
+       sumOfDigits(1234);
+       isPrime(5);
+       fibonacci(5);
+       reverseNumber(12345);
+       celsiusToFahrenheit(30);
+	}
+	
+	
+	public static void swap(int a, int b){
+	    System.out.println("Before "+ "a = "+ a +" b= "+ b);
+		int temp = a;
+		a = b;
+		b = temp;
+		System.out.println("After "+ "a = "+ a +" b= "+ b);
+	}
+	
+	public static float multiply(float num1, float num2){
+		float result = num1*num2;
+		return result;
+	}
+	
+	public static void evorodd(int a){
+	    System.out.println((a%2 == 0)? "Even":"Odd");
+	}
+	
+	public static void area(double radius){
+	    System.out.println(3.14*radius*radius);
+	}
+	
+	public static void posOrNeg(int a){
+		if(a>0){
+		    System.out.println("Positive");
+		} else if(a<0){
+		    System.out.println("Negative");
+		} else{
+		    System.out.println("Zero");
+		}
+	}
+	
+	public static void factorial(int a){
+		int result = 1;
+		while(a>=1){
+		    result = result * a;
+		    a--;
+		}
+		System.out.println(result);
+	}
+	
+	public static void greater(int a, int b, int c){
+		if(a>=b && a >= c){
+		    System.out.println(a+ " is greatest");
+		}
+		else if(b>=a && b>=c){
+		    System.out.println(b+ "is greatest");
+		} else{
+		    System.out.println(c+" is greatest");
+		}
+	}
+	public static void sumOfDigits(int num){
+	    int sum =0;
+	   
+	   while(num>0){
+	       int digit = num%10;
+	       sum += digit;
+	       num /= 10;
+	   }
+	   System.out.println(sum); 
+	}
+    public static void isPrime(int n) {
+    if (n <= 1) {
+        System.out.println("Not prime");
+        return;
+    }
+
+    for (int i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i == 0) {
+            System.out.println("Not prime");
+            return;
+        }
+    }
+
+    System.out.println("Prime");
+}
+    public static void fibonacci(int n) {
+    int a = 0, b = 1;
+
+    for (int i = 0; i < n; i++) {
+        System.out.print(a + " ");
+        int next = a + b;
+        a = b;
+        b = next;
+    }
+}
+    public static void reverseNumber(int n) {
+    int reversed = 0;
+
+    while (n != 0) {
+        int digit = n % 10;
+        reversed = reversed * 10 + digit;
+        n /= 10;
+    }
+    System.out.println("Reversed number: " + reversed);
+}
+   public static void celsiusToFahrenheit(double celsius) {
+    double fahrenheit = (celsius * 9/5) + 32;
+    System.out.println(celsius + "C = " + fahrenheit + "F");
+}
+	   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,204 @@
+Stored_Procedure_Assignment_Solutions
+
+-- create
+CREATE TABLE EMPLOYEES (
+  empId INTEGER PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  dept VARCHAR(50) NOT NULL,
+  SALARY DECIMAL(10, 2)
+);
+
+CREATE TABLE DEPARTMENTS(
+  dept_id INT primary key,
+  name varchar(50),
+  location varchar(50)
+);
+
+create table orders (
+  order_id int primary key,
+  customer_name varchar(50),
+  amount decimal(10, 2),
+  order_date date
+);
+-- insert
+INSERT INTO EMPLOYEES VALUES
+(1, 'Alice', 'HR', 50000),
+(2, 'Bob', 'IT', 60000),
+(3, 'Chatlie', 'IT', 55000),
+(4, 'David', 'Sales', 70000),
+(5, 'Eva', 'Sales', 65000);
+
+insert into departments VALUES
+(1, 'HR', 'New York'),
+(2, 'IT', 'San Francico'),
+(3, 'Sales', 'Chicago');
+
+Insert into orders VALUES
+(101, 'John Doe', 1200.50, '2025-08-01'),
+(102, 'Jane Smith', 800.75, '2025-08-02'),
+(103, 'Alice Brown', 500.00, '2025-08-03');
+-- fetch 
+
+
+
+DELIMITER $$
+
+CREATE PROCEDURE GetAllEmployees()
+BEGIN
+    SELECT * FROM employees;
+END$$
+
+DELIMITER ;
+
+
+
+
+
+DELIMITER $$
+
+CREATE PROCEDURE GetEmployeesByDept(in dept_name varchar(50))
+BEGIN
+    SELECT * FROM employees
+    where dept = dept_name;
+END$$
+
+DELIMITER ;
+
+
+
+
+DELIMITER $$
+
+CREATE PROCEDURE AddEmployee(
+  IN p_empid int,
+  in p_name varchar(50),
+  in p_department varchar(50),
+  in p_salary decimal(10, 2)
+)
+
+BEGIN 
+    insert into employees(empId, name, dept, salary) values (p_empid, p_name, p_department, p_salary);
+    
+END$$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+CREATE PROCEDURE UpdateSalary(
+    IN p_EmployeeId INT,
+    IN p_NewSalary DECIMAL(10,2)
+)
+BEGIN
+    UPDATE employees
+    SET Salary = p_NewSalary
+    WHERE empid = p_EmployeeId;
+END$$
+
+DELIMITER ;
+
+
+
+
+DELIMITER $$
+
+CREATE PROCEDURE DeleteEmployeeByID(
+    IN p_EmployeeId INT
+)
+BEGIN
+    DELETE FROM employees
+    WHERE empid = p_EmployeeId;
+END$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+CREATE PROCEDURE TotalSalaryByDepartment()
+BEGIN
+    SELECT Dept, SUM(Salary) AS TotalSalary
+    FROM employees
+    GROUP BY Dept;
+END$$
+
+DELIMITER ;
+
+
+
+
+DELIMITER $$
+
+CREATE PROCEDURE GetOrdersAboveAmount(
+    IN p_Amount DECIMAL(10,2)
+)
+BEGIN
+    SELECT *
+    FROM orders
+    WHERE Amount > p_Amount;
+END$$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+CREATE PROCEDURE GetDeptLocation(in dept_name varchar(50))
+BEGIN
+    SELECT name, location from departments
+    where name = dept_name;
+END$$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+create PROCEDURE GetHighestPaidEmployee()
+BEGIN
+   select * from EMPLOYEES
+   order by salary desc limit 1;
+END$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+create PROCEDURE CountOfEmployees()
+BEGIN
+   select dept, count(*) as Count_Of_Employees_Dept
+   from EMPLOYEES
+   group by dept;
+END$$
+
+DELIMITER ;
+
+
+
+call GetAllEmployees();
+call GetEmployeesByDept('it');
+call AddEmployee(6, 'MNR', 'IT', 50000);
+call GetAllEmployees();
+call UpdateSalary(6, 70000);
+call GetAllEmployees();
+call DeleteEmployeeByID(5);
+call GetAllEmployees();
+CALL TotalSalaryByDepartment();
+CALL GetOrdersAboveAmount(500.00);
+call GetDeptLocation('IT');
+call GetHighestPaidEmployee();
+call CountOfEmployees();
+
+
+
+
+
+
+
+
+

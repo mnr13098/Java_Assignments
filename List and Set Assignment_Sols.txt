@@ -1,0 +1,210 @@
+List and Set Assignment_Sols
+
+import java.util.*;
+
+class Student {
+    int id;
+    String name;
+
+    Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return id + " - " + name;
+    }
+}
+
+class Book {
+    int id;
+    String title;
+
+    Book(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return id + " - " + title;
+    }
+}
+
+public class ListSetAssignments {
+
+    static void listOfIntegers() {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) list.add(i);
+        System.out.println("List of Integers: " + list);
+    }
+
+    static void removeEvenNumbers() {
+        List<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10));
+        list.removeIf(n -> n % 2 == 0);
+        System.out.println("After removing evens: " + list);
+    }
+
+    static void findMaxMin() {
+        List<Integer> list = Arrays.asList(5, 12, 3, 9, 21, 7);
+        int max = Collections.max(list);
+        int min = Collections.min(list);
+        System.out.println("Max: " + max + ", Min: " + min);
+    }
+
+    static void sortList() {
+        List<Integer> list = new ArrayList<>(Arrays.asList(5, 2, 9, 1, 7));
+        Collections.sort(list);
+        System.out.println("Ascending: " + list);
+        list.sort(Collections.reverseOrder());
+        System.out.println("Descending: " + list);
+    }
+
+    static void reverseList() {
+        List<Integer> list = new ArrayList<>(Arrays.asList(1,2,3,4,5));
+        Collections.reverse(list);
+        System.out.println("Reversed: " + list);
+    }
+
+    static void checkContainsElement() {
+        List<String> list = Arrays.asList("apple", "banana", "cherry");
+        String target = "banana";
+        System.out.println("Contains " + target + "? " + list.contains(target));
+    }
+
+    static void findDuplicatesInList() {
+        List<String> list = Arrays.asList("a", "b", "c", "a", "b", "d");
+        Set<String> seen = new HashSet<>();
+        Set<String> duplicates = new HashSet<>();
+        for (String s : list) {
+            if (!seen.add(s)) duplicates.add(s);
+        }
+        System.out.println("Duplicates: " + duplicates);
+    }
+
+    static void convertArrayToList() {
+        String[] arr = {"one", "two", "three"};
+        List<String> list = new ArrayList<>(Arrays.asList(arr));
+        System.out.println("Array to List: " + list);
+    }
+
+    static void mergeTwoLists() {
+        List<Integer> list1 = Arrays.asList(1, 2, 3);
+        List<Integer> list2 = Arrays.asList(4, 5, 6);
+        List<Integer> merged = new ArrayList<>();
+        merged.addAll(list1);
+        merged.addAll(list2);
+        System.out.println("Merged List: " + merged);
+    }
+
+    static void listOfCustomObjects() {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student(1, "John"));
+        students.add(new Student(2, "Alice"));
+        students.add(new Student(3, "Bob"));
+        students.sort(Comparator.comparing(s -> s.name));
+        System.out.println("Students sorted by name: " + students);
+    }
+
+    static void setAddElements() {
+        Set<String> set = new HashSet<>();
+        set.addAll(Arrays.asList("A","B","C","D","E","A","B","F","G","H","I"));
+        System.out.println("Set with unique names: " + set);
+    }
+
+    static void removeDuplicatesUsingSet() {
+        List<Integer> list = Arrays.asList(1,2,2,3,4,4,5);
+        Set<Integer> set = new HashSet<>(list);
+        System.out.println("Without duplicates: " + set);
+    }
+
+    static void checkSetEquality() {
+        Set<Integer> set1 = new HashSet<>(Arrays.asList(1,2,3));
+        Set<Integer> set2 = new HashSet<>(Arrays.asList(3,2,1));
+        System.out.println("Sets equal? " + set1.equals(set2));
+    }
+
+    static void intersectionOfSets() {
+        Set<Integer> set1 = new HashSet<>(Arrays.asList(1,2,3,4));
+        Set<Integer> set2 = new HashSet<>(Arrays.asList(3,4,5,6));
+        set1.retainAll(set2);
+        System.out.println("Intersection: " + set1);
+    }
+
+    static void unionAndDifference() {
+        Set<Integer> set1 = new HashSet<>(Arrays.asList(1,2,3));
+        Set<Integer> set2 = new HashSet<>(Arrays.asList(3,4,5));
+        Set<Integer> union = new HashSet<>(set1); union.addAll(set2);
+        Set<Integer> diff = new HashSet<>(set1); diff.removeAll(set2);
+        Set<Integer> symDiff = new HashSet<>(union);
+        symDiff.removeAll(new HashSet<>(set1){{retainAll(set2);}});
+        System.out.println("Union: " + union);
+        System.out.println("Difference: " + diff);
+        System.out.println("Symmetric Difference: " + symDiff);
+    }
+
+    static void setOfCustomObjects() {
+        Set<Book> books = new HashSet<>();
+        books.add(new Book(1,"Java"));
+        books.add(new Book(2,"Python"));
+        books.add(new Book(1,"Java")); // duplicate
+        System.out.println("Books in set: " + books);
+    }
+
+    static void containsAllExample() {
+        Set<Integer> set1 = new HashSet<>(Arrays.asList(1,2,3,4));
+        Set<Integer> set2 = new HashSet<>(Arrays.asList(2,3));
+        System.out.println("ContainsAll: " + set1.containsAll(set2));
+        boolean manual = set2.stream().allMatch(set1::contains);
+        System.out.println("Manual containsAll: " + manual);
+    }
+
+    static void convertSetList() {
+        Set<String> set = new HashSet<>(Arrays.asList("a","b","c"));
+        List<String> list = new ArrayList<>(set);
+        Set<String> newSet = new HashSet<>(list);
+        System.out.println("Set -> List -> Set: " + newSet);
+    }
+
+    static void removeSpecificElement() {
+        Set<String> set = new HashSet<>(Arrays.asList("apple","banana","cherry"));
+        String remove = "banana";
+        set.remove(remove);
+        System.out.println("After removing: " + set);
+    }
+
+    static void frequencyCount() {
+        List<String> words = Arrays.asList("a","b","a","c","b","a");
+        Set<String> unique = new HashSet<>(words);
+        for (String word : unique) {
+            System.out.println(word + " -> " + Collections.frequency(words, word));
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("----- LIST ASSIGNMENTS -----");
+        listOfIntegers();
+        removeEvenNumbers();
+        findMaxMin();
+        sortList();
+        reverseList();
+        checkContainsElement();
+        findDuplicatesInList();
+        convertArrayToList();
+        mergeTwoLists();
+        listOfCustomObjects();
+
+        System.out.println("\n----- SET ASSIGNMENTS -----");
+        setAddElements();
+        removeDuplicatesUsingSet();
+        checkSetEquality();
+        intersectionOfSets();
+        unionAndDifference();
+        setOfCustomObjects();
+        containsAllExample();
+        convertSetList();
+        removeSpecificElement();
+        frequencyCount();
+    }
+}

@@ -1,0 +1,137 @@
+SQL_Assaignment_2_Solutions
+
+CREATE TABLE EMPLOYEES(
+  empId INTEGER PRIMARY KEY,
+  FirstName VARCHAR(50) NOT NULL,
+  LastName VARCHAR(50),
+  DOB VARCHAR(50),
+  SALARY INTEGER,
+  Department varchar(50)
+);
+
+-- insert
+INSERT INTO EMPLOYEES(empId, FirstName, LastName, DOB, SALARY, Department) VALUES
+(1, 'Amit', 'Sharma', '1985-03-15', 40000, 'CSE'),
+(2, 'Priya', 'Verma', '1990-07-22', 60000, 'CSE'),
+(3, 'Rajesh', 'Kumar', '1982-01-09', 75000, 'ECE'),
+(4, 'Sneha', 'Iyer', '1993-11-05', 58000, 'EE'),
+(5, 'Vikram', 'Singh', '1988-06-30', 72000, 'ME'),
+(6, 'Ananya', 'Reddy', '1995-04-18', 50000, 'ECE'),
+(7, 'Manoj', 'Patil', '1984-09-25', 68000, 'CE'),
+(8, 'Kavita', 'Joshi', '1992-12-12', 64000, 'EE'),
+(9, 'Suresh', 'Nair', '1987-08-03', 70000, 'CSE'),
+(10, 'Neha', 'Kapoor', '1994-02-20', 56000, 'ECE');
+
+INSERT INTO DEPARTMENTS(DeptId, DeptName) VALUES
+(11, 'cse'),
+(12, 'ECE'),
+(13, 'EE'),
+(14, 'ME'),
+(15, 'CE');
+
+
+-- fetch 
+SELECT * FROM EMPLOYEES;
+
+SELECT * FROM EMPLOYEES
+WHERE SALARY>50000;
+
+UPDATE EMPLOYEES
+SET SALARY = 60000
+WHERE EMPID = 5;
+
+DELETE FROM EMPLOYEES
+WHERE EMPID = 10;
+
+
+SELECT LastName
+FROM EMPLOYEES
+order by LastNAme desc;
+
+SELECT DISTINCT(Department)
+FROM EMPLOYEES;
+
+SELECT AVG(salary) as AVG_Salary
+from employees;
+
+SELECT department, COUNT(*) as Emp_In_Each_Dept
+FROM employees
+GROUP BY DEPARTMENT;
+
+SELECT LastName
+FROM employees
+where lastname like 's%';
+
+SELECT *
+from employees
+where dob between '1980-01-01' and '1990-01-01';
+
+SELECT * FROM employees
+order by salary desc limit 5;
+
+select FirstName
+from employees
+where firstname like '%an%';
+
+select * from employees
+where salary is not null;
+
+SELECT CONCAT(FirstName, ' ', LastName) AS FullName
+FROM EMPLOYEES;
+
+SELECT e.firstname, d.DeptName
+FROM employees e
+LEFT JOIN departments d ON e.DeptId = d.DeptId;
+
+SELECT e.empId, e.FirstName, e.LastName
+FROM Employees e
+LEFT JOIN Departments d
+    ON e.DeptId = d.DeptId
+WHERE d.DeptId IS NULL;
+
+select e.firstname, d.DeptName
+from Employees e join departments d on d.DeptId = e.DeptId
+where d.deptname = 'ece';
+
+select d.deptname, sum(e.salary) as Total_saalary
+from employees e join departments d on d.deptid = e.deptid
+group by d.DeptName;
+
+SELECT 
+    CASE 
+        WHEN TIMESTAMPDIFF(YEAR, DOB, CURDATE()) > 30 THEN 'Above 30'
+        WHEN TIMESTAMPDIFF(YEAR, DOB, CURDATE()) < 30 THEN 'Below 30'
+        ELSE 'Exactly 30'
+    END AS AgeGroup,
+    COUNT(*) AS EmployeeCount
+FROM Employees
+GROUP BY AgeGroup;
+
+select d.deptname, count(*)
+from employees e join departments d on d.deptid = e.deptid
+group by d.DeptName
+having count(*) > 2;
+
+SELECT 
+    DepartmentID, 
+    MIN(Salary) AS MinSalary, 
+    MAX(Salary) AS MaxSalary
+FROM Employees
+GROUP BY DepartmentID;
+
+select d.deptname, count(*) as Emp_Count
+from employees e join departments d on d.deptid = e.deptid
+group by d.DeptName
+order by count(*) desc;
+
+
+select FirstName, SALARY
+from EMPLOYEES
+order by salary desc 
+limit 1 offset 1;
+
+select d.deptname
+from employees e join departments d on d.deptid = e.deptid
+group by d.DeptName
+having avg(e.salary) < 60000;
+
